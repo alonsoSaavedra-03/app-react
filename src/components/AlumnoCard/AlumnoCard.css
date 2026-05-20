@@ -1,0 +1,50 @@
+.alumno-card {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: 0.3s ease;
+    height: 100%;
+    border: 1px solid #f1f1f1;
+}
+
+.alumno-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.alumno-header h5 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0d6efd;
+}
+
+.alumno-header p {
+    margin: 4px 0 14px;
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.alumno-body {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.alumno-body .badge {
+    width: fit-content;
+    padding: 8px 14px;
+    font-size: 0.75rem;
+}
+
+.acciones {
+    display: flex;
+    gap: 8px;
+}
+
+.acciones button {
+    flex: 1;
+    font-size: 0.8rem;
+    border-radius: 10px;
+}

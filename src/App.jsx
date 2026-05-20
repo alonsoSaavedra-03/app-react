@@ -1,65 +1,82 @@
-// 1. Importas el componente Navbar desde su archivo
+import { useEffect, useState } from "react";
+
 import Navbar from "./components/Navbar/Navbar";
-import AlumnoCard from "./components/AlumnoCard/AlumnoCard"
+import AlumnoCard from "./components/AlumnoCard/AlumnoCard";
+import Contador from "./components/Contador/Contador";
+import AlumnoForm from "./components/AlumnoForm/AlumnoForm";
 
 function App() {
-  return (
-    <>
 
-      <Navbar />
+    // Estado donde se guardarán los alumnos
+    const [alumnos, setAlumnos] = useState([]);
 
-      <div className="container">
-      <p></p>
-        <h3 className="mb-4">Listado de Alumnos</h3>
-        <div className="row">
-          <AlumnoCard 
-            nombre= "Alonso"
-            carrera= "Desarrollo de aplicaciones"
-            estado= "Matriculado"
-          />
-          <AlumnoCard 
-            nombre= "Tavara"
-            carrera= "Desarrollo de aplicaciones"
-            estado= "Deshabilitado"
-          />
-          <AlumnoCard 
-            nombre= "Rios"
-            carrera= "Desarrollo de aplicaciones"
-            estado= "Deshabilitado"
-          />
-          <AlumnoCard 
-            nombre="Valeria" 
-            carrera="Diseño y Desarrollo de Software" 
-            estado="Matriculado" 
-          />
+    // Función para obtener alumnos desde Laravel
+    const obtenerAlumnos = async () => {
 
-          <AlumnoCard 
-            nombre="Camila" 
-            carrera="Inteligencia Artificial y Ciencia de Datos" 
-            estado="Deshabilitado" 
-          />
+        try {
 
-          <AlumnoCard 
-            nombre="Mateo" 
-            carrera="Ciberseguridad" 
-            estado="Matriculado" 
-          />
+            const respuesta = await fetch(
+                "http://127.0.0.1:8000/api/alumno"
+            );
 
-          <AlumnoCard 
-            nombre="Diego" 
-            carrera="Desarrollo de Aplicaciones" 
-            estado="Matriculado" 
-          />
+            const datos = await respuesta.json();
 
-          <AlumnoCard 
-            nombre="Sofía" 
-            carrera="Diseño de Interfaces (UI/UX)" 
-            estado="Deshabilitado" 
-          />
-        </div>
-      </div>
-    </>
-  );
+            setAlumnos(datos);
+
+        } catch (error) {
+
+            console.error(
+                "Error al obtener alumnos:",
+                error
+            );
+
+        }
+    };
+
+    // Se ejecuta al iniciar la app
+    useEffect(() => {
+        obtenerAlumnos();
+    }, []);
+
+    return (
+        <>
+
+            <Navbar />
+
+            <div className="container">
+
+                <p></p>
+
+
+                {/* Formulario */}
+                <AlumnoForm
+                    recargarAlumnos={obtenerAlumnos}
+                />
+
+                <h3 className="mb-4">
+                    Listado de Alumnos
+                </h3>
+                
+                <div className="row">
+
+                    {/* Cards dinámicas */}
+                    {alumnos.map((alumno) => (
+
+                      <AlumnoCard
+                      key={alumno.id_alumno}
+                      nombre={`${alumno.nombre} ${alumno.apellidos}`}
+                      carrera="Desarrollo de Aplicaciones"
+                      estadoInicial={alumno.estado_matricula}
+                      imagen={alumno.imagen}
+                      />
+
+                    ))}
+
+                </div>
+            </div>
+
+        </>
+    );
 }
 
 export default App;
