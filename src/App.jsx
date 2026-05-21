@@ -1,80 +1,29 @@
 import { useEffect, useState } from "react";
 
 import Navbar from "./components/Navbar/Navbar";
-import AlumnoCard from "./components/AlumnoCard/AlumnoCard";
-import Contador from "./components/Contador/Contador";
-import AlumnoForm from "./components/AlumnoForm/AlumnoForm";
+import { Routes, Route } from "react-router-dom";
+import Inicio from "./components/pages/Inicio/Inicio";
+import Alumnos from "./components/pages/Alumnos/Alumnos";
+import Profesores from "./components/pages/Profesores/Profesores";
+import Horarios from "./components/pages/Horarios/Horarios";
+import Cursos from "./components/pages/Cursos/Cursos";
+import Matriculas from "./components/pages/Matriculas/Matriculas";
+
 
 function App() {
 
-    // Estado donde se guardarán los alumnos
-    const [alumnos, setAlumnos] = useState([]);
-
-    // Función para obtener alumnos desde Laravel
-    const obtenerAlumnos = async () => {
-
-        try {
-
-            const respuesta = await fetch(
-                "http://127.0.0.1:8000/api/alumno"
-            );
-
-            const datos = await respuesta.json();
-
-            setAlumnos(datos);
-
-        } catch (error) {
-
-            console.error(
-                "Error al obtener alumnos:",
-                error
-            );
-
-        }
-    };
-
-    // Se ejecuta al iniciar la app
-    useEffect(() => {
-        obtenerAlumnos();
-    }, []);
-
     return (
         <>
-
             <Navbar />
 
-            <div className="container">
-
-                <p></p>
-
-
-                {/* Formulario */}
-                <AlumnoForm
-                    recargarAlumnos={obtenerAlumnos}
-                />
-
-                <h3 className="mb-4">
-                    Listado de Alumnos
-                </h3>
-                
-                <div className="row">
-
-                    {/* Cards dinámicas */}
-                    {alumnos.map((alumno) => (
-
-                      <AlumnoCard
-                      key={alumno.id_alumno}
-                      nombre={`${alumno.nombre} ${alumno.apellidos}`}
-                      carrera="Desarrollo de Aplicaciones"
-                      estadoInicial={alumno.estado_matricula}
-                      imagen={alumno.imagen}
-                      />
-
-                    ))}
-
-                </div>
-            </div>
-
+            <Routes>
+                <Route path="/" element={<Inicio />} />
+                <Route path="/alumnos" element={<Alumnos />} />
+                <Route path="/profesores" element={<Profesores />} />
+                <Route path="/horarios" element={<Horarios />} />
+                <Route path="/cursos" element={<Cursos />} />
+                <Route path="/matriculas" element={<Matriculas />} />
+            </Routes>
         </>
     );
 }
