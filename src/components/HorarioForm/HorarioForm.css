@@ -1,0 +1,5 @@
+input {
+    color: #ffffff !important;
+    background-color: #1f2937 !important; /* Gris un poco más claro para hacer contraste */
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}

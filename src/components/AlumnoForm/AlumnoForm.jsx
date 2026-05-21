@@ -272,6 +272,15 @@ const AlumnoForm = ({ recargarAlumnos }) => {
                         <div className="col-12 text-end mt-3">
                             <button
                                 type="submit"
+                                style={{
+                                    background: "linear-gradient(135deg, #6366f1, #4f46e5)",
+                                    border: "none",
+                                    color: "#fff",
+                                    borderRadius: 10,
+                                    fontWeight: 600,
+                                    padding: "10px 32px",
+                                    boxShadow: "0 4px 20px rgba(99,102,241,0.35)",
+                                }}
                                 className="btn btn-primary btn-lg px-5 rounded-pill shadow-lg fw-semibold"
                             >
                                 <i className="fas fa-save me-2"></i>

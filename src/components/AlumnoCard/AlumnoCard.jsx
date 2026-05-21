@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './AlumnoCard.css';
 
-const AlumnoCard = ({ nombre, carrera, estadoInicial, imagen }) => {
+const AlumnoCard = ({ nombre, carrera, estadoInicial, imagen, id_alumno, abrirModal }) => {
 
     const [estado, setEstado] = useState(estadoInicial);
 
@@ -17,6 +17,27 @@ const AlumnoCard = ({ nombre, carrera, estadoInicial, imagen }) => {
             setEstado('Matriculado');
         }
     };
+
+    const EliminarAlumno = (id) => {
+        if (window.confirm('¿Estás seguro de que deseas eliminar este alumno?')) {
+            fetch(`http://127.0.0.1:8000/api/alumno/${id}`, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Alumno eliminado exitosamente');
+                        window.location.reload();
+                    } else {
+                        alert('Error al eliminar el alumno');
+                    }
+            })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al eliminar el alumno');
+                });
+        }
+    };
+
 
     return (
         <div className="col-md-4 mb-4">
@@ -69,11 +90,10 @@ const AlumnoCard = ({ nombre, carrera, estadoInicial, imagen }) => {
                             <i className="fas fa-sync-alt me-1"></i> Estado
                         </button>
 
-                        <button className="btn btn-sm btn-outline-primary rounded-pill px-3 py-1.5 flex-grow-1">
+                        <button type="button" className="btn btn-sm btn-outline-primary rounded-pill px-3 py-1.5 flex-grow-1" onClick={() => abrirModal(id_alumno)}>
                             <i className="fas fa-edit me-1"></i> Editar
                         </button>
-
-                        <button className="btn btn-sm btn-outline-danger rounded-pill px-3 py-1.5 flex-grow-1">
+                        <button className="btn btn-sm btn-outline-danger rounded-pill px-3 py-1.5 flex-grow-1" onClick={() => EliminarAlumno(id_alumno)}>
                             <i className="fas fa-trash-alt me-1"></i> Borrar
                         </button>
 
